@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoo/screens/addtaskscreen.dart';
-import 'package:todoo/source/apidata.dart';
 import 'package:todoo/source/services.dart';
+
 import 'package:todoo/source/task_data.dart';
-import 'package:todoo/widgets/tasks.dart';
+
 import 'package:todoo/widgets/tasks_tile.dart';
 class TasksList extends StatelessWidget {
-  Apiservices apicall=Apiservices();
+TaskServices services=TaskServices();
   @override
   Widget build(BuildContext context) {
 
@@ -24,23 +24,9 @@ class TasksList extends StatelessWidget {
                 taskData.doneTask(task);
               },
               longPressCallback: () {
-                {taskData.deleteTask(task);}
 
-                /*return AlertDialog(
-                 title: Text('Are you sure you want to delete the task?'),
-                 actions([ FlatButton(onPressed: ()
-                     child:
-                 Container(
-                   color: Colors.red[900],
-                   child: Text('YES'),
-                 )),
-
-                ] )
-
-               );
-
-               */
-              },
+                services.deletetask(task.id, context);
+                },
               onTapCallback: (){
 
                 showModalBottomSheet(

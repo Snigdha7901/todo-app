@@ -9,6 +9,7 @@ import 'package:todoo/widgets/tasks.dart';
   class Addtaskscreen extends StatelessWidget {
     @override
 
+
     TaskServices service= new TaskServices();
     TextEditingController newtask=new TextEditingController();
     TextEditingController taskdesc=new TextEditingController();
@@ -53,6 +54,7 @@ taskdesc.text=task.desc;}
                         textAlign: TextAlign.center,
                         controller: taskdesc,
                       ),
+
                     ],
                   ),
 
@@ -78,13 +80,15 @@ taskdesc.text=task.desc;}
       );
     }
 
-    _addtask(context){
-      Map<String,dynamic>map={
-        'name': newtask.text,
-        'desc':taskdesc.text,
-      };
-      service.addTask(map,context);
+    _addtask(context) {
 
+       Map<String,String>map={
+         "name": newtask.text,
+         "desc":taskdesc.text,
+         "priority":"min",
+
+       };
+      service.addTask(map, context);
 
       Navigator.pop(context);
     }

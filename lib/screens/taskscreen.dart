@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todoo/source/apidata.dart';
+import 'package:todoo/source/services.dart';
 import 'package:todoo/source/task_data.dart';
 import 'package:todoo/widgets/tasks_list.dart';
 import 'addtaskscreen.dart';
@@ -12,10 +14,20 @@ class Taskscreen  extends StatefulWidget {
 
 class _State extends State<Taskscreen>
 
- {
-
-
+ { TaskServices taskServices=TaskServices();
   @override
+
+  Future<void> initState()  {
+    super.initState();
+ cred();
+  }void cred()async{
+   var userid= await (taskServices.getUser(context));
+   print(userid['data']['name']);
+ }
+ /* void data()async{
+    var userid= await (taskdata.getUser());
+    print(userid['data']['name']);
+  }*/
   Widget build(BuildContext context) {
 
     return Scaffold(
