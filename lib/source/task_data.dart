@@ -1,14 +1,31 @@
 import 'package:flutter/foundation.dart';
 
 
-import 'package:todoo/widgets/tasks.dart';
-import 'dart:collection';
-class TaskData extends ChangeNotifier {
 
+import 'dart:collection';
+
+import 'package:todoo/widgets/tasks.dart';
+
+
+class TaskData extends ChangeNotifier {
+  bool _isloading=false;
+  bool get isloading=>_isloading;
+  set isloading(bool val){
+    _isloading=val;
+    notifyListeners();
+  }
+  bool _isAdding=false;
+  bool get isAdding=>_isAdding;
+  set isAdding(bool val){
+    _isAdding=val;
+    notifyListeners();
+  }
 
   List<Task> _tasks=[];
-  void gettasks(List<Task>tasks){
+
+  set tasks(List<Task>tasks){
     _tasks=tasks;
+    notifyListeners();
   }
 
   UnmodifiableListView<Task> get tasks {
@@ -24,7 +41,7 @@ class TaskData extends ChangeNotifier {
   Future addTask(Task task) async{
     _tasks.add(task);
     notifyListeners();
-    }
+  }
 
 
 
@@ -34,7 +51,7 @@ class TaskData extends ChangeNotifier {
   print('check 2');
   notifyListeners();
   }
-   /**/
+
 
 
 
@@ -43,9 +60,9 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTask(Task task) {
+  void deleteTask(var id) {
 
-    _tasks.remove(task);
+    _tasks.removeWhere((v) => v.id==id);
 
     notifyListeners();
   }

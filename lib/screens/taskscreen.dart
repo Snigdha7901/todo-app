@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todoo/source/apidata.dart';
+
+import 'package:provider/provider.dart';
+import 'package:todoo/locator.dart';
 import 'package:todoo/source/services.dart';
 import 'package:todoo/source/task_data.dart';
 import 'package:todoo/widgets/tasks_list.dart';
+
+
 import 'addtaskscreen.dart';
-import 'package:provider/provider.dart';
 
 class Taskscreen  extends StatefulWidget {
   @override
@@ -14,24 +17,22 @@ class Taskscreen  extends StatefulWidget {
 
 class _State extends State<Taskscreen>
 
- { TaskServices taskServices=TaskServices();
-  @override
+{  @override
+TaskServices _taskService=locator<TaskServices>();
+void initState()  {
 
-  Future<void> initState()  {
-    super.initState();
- cred();
-  }void cred()async{
-   var userid= await (taskServices.getUser(context));
-   print(userid['data']['name']);
- }
- /* void data()async{
-    var userid= await (taskdata.getUser());
-    print(userid['data']['name']);
-  }*/
-  Widget build(BuildContext context) {
+  super.initState();
+  data();
+}
+void data()async{
+  var userid= await _taskService.getuser();
+  print(userid['data']['name']);
 
-    return Scaffold(
-        backgroundColor: Colors.red[900],
+}
+Widget build(BuildContext context) {
+
+  return Scaffold(
+      backgroundColor: Colors.red[900],
       body:Column(
         children: [
           Container(
@@ -41,12 +42,12 @@ class _State extends State<Taskscreen>
               children: <Widget>[
 
                 CircleAvatar(child:Icon(
-                Icons.list,
+                  Icons.list,
                   color: Colors.red[900],
                   size: 60.0,
                 ),
                   backgroundColor: Colors.white,
-                radius: 30,),
+                  radius: 30,),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -72,21 +73,21 @@ class _State extends State<Taskscreen>
       ),
       floatingActionButton:FloatingActionButton(
         backgroundColor: Colors.red[800],
-          child: Icon(Icons.add),
-          onPressed: (){
+        child: Icon(Icons.add),
+        onPressed: (){
           showModalBottomSheet(
               context: context,
               isScrollControlled: true,
               builder: (context) => SingleChildScrollView(
                   child:Container(
                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: Addtaskscreen(null),
+                    child: Addtaskscreen(),
                   )
               )
           );
-          } ,
-    ));
-  }
+        } ,
+      ));
+}
 
 }
 

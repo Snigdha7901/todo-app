@@ -1,13 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoo/screens/addtaskscreen.dart';
 import 'package:todoo/source/services.dart';
-
 import 'package:todoo/source/task_data.dart';
-
 import 'package:todoo/widgets/tasks_tile.dart';
-class TasksList extends StatelessWidget {
-TaskServices services=TaskServices();
+
+import '../locator.dart';
+
+class TasksList  extends StatefulWidget {
+  @override
+  _State createState() => _State();
+}
+
+class _State extends State<TasksList> {
+  void initState()
+  {locator<TaskServices>().fetchtask();
+  super.initState();}
   @override
   Widget build(BuildContext context) {
 
@@ -16,7 +24,7 @@ TaskServices services=TaskServices();
         return ListView.builder(
           itemBuilder: (context, index) {
             final task = taskData.tasks[index];
-            return Listitem(
+            return taskData.isloading? Center(child: CupertinoActivityIndicator()): Listitem(
               name: task.name,
               desc: task.desc,
               isChecked: task.isdone,
@@ -25,20 +33,12 @@ TaskServices services=TaskServices();
               },
               longPressCallback: () {
 
-                services.deletetask(task.id, context);
-                },
+                locator<TaskServices>().deleteTask(task.id);
+                ;
+              },
               onTapCallback: (){
-
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SingleChildScrollView(
-                        child:Container(
-                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Addtaskscreen(task),)
-            )
-            );
-            } ,
+                Navigator.pushNamed(context, '/addTaskScreen',arguments:task);
+              } ,
 
             );
           },

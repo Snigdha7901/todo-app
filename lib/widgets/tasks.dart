@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:todoo/utilities/enum_utilities.dart';
+
+import '../priority.dart';
 
 class Task {
   String name;
   String desc;
-  String prior;
+  TaskPriority prior;
   var id;
   bool isdone;
 
@@ -20,7 +23,7 @@ class Task {
     this.desc = map['desc'];
     this.id = map['id'];
     this.isdone = false;
-    this.prior=map['priority'];
+    this.prior=enumValuefromString<TaskPriority>(map['priority'].toString(),TaskPriority.values );
 
   }
 }

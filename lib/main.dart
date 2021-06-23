@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoo/locator.dart';
 
 
 import 'package:todoo/screens/taskscreen.dart';
 
 import 'package:todoo/source/task_data.dart';
 
-void main() {
+import 'environment/app_env.dart';
+
+void main(){
+  setupLocator();
+  AppEnvironment.setupEnv(Environment.dev);
   runApp(MyApp());
 }
 
